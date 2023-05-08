@@ -10,6 +10,21 @@ namespace CourierKata.Tests
             {
                 return 3;
             }
+            
+            if (parcel.Length < 50 && parcel.Height < 50 && parcel.Width < 50)
+            {
+                return 8;
+            }
+            
+            if (parcel.Length < 100 && parcel.Height < 100 && parcel.Width < 100)
+            {
+                return 15;
+            }
+            
+            if (parcel.Length > 100 && parcel.Height > 100 && parcel.Width > 100)
+            {
+                return 25;
+            }
 
             return 0;
         }
