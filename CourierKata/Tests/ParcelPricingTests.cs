@@ -14,7 +14,7 @@ namespace CourierKata.Tests
 
             var result = calc.PriceParcel(parcel);
 
-            result.Should().Be(3);
+            result.Should().Be("Small Parcel: $3 - Total Cost: $3");
         }
         
         [Fact]
@@ -25,7 +25,7 @@ namespace CourierKata.Tests
 
             var result = calc.PriceParcel(parcel);
 
-            result.Should().Be(8);
+            result.Should().Be("Medium Parcel: $8 - Total Cost: $8");
         }
         
         [Fact]
@@ -36,7 +36,7 @@ namespace CourierKata.Tests
 
             var result = calc.PriceParcel(parcel);
 
-            result.Should().Be(15);
+            result.Should().Be("Large Parcel: $15 - Total Cost: $15");
         }
         
         [Fact]
@@ -47,7 +47,7 @@ namespace CourierKata.Tests
 
             var result = calc.PriceParcel(parcel);
 
-            result.Should().Be(25);
+            result.Should().Be("XL Parcel: $25 - Total Cost: $25");
         }
 
     }
