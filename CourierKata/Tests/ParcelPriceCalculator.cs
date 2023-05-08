@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+
 
 namespace CourierKata.Tests
 {
     public class ParcelPriceCalculator
     {
-        public string PriceParcel(List<Parcel> parcels)
+        public string PriceParcel(List<Parcel> parcels, bool includesSpeedyShipping = false)
         {
             var listOfParcels = String.Empty;
             var total = Decimal.Zero;
@@ -19,7 +18,17 @@ namespace CourierKata.Tests
                 total += parcelInformation.Item2;
             }
 
-            listOfParcels = listOfParcels.Remove(listOfParcels.Length - 2);
+            if (includesSpeedyShipping)
+            {
+                var speedyShippingPrice = Decimal.Multiply(total, 2);
+                total = speedyShippingPrice;
+                listOfParcels += $"Speedy Shipping: $ {Convert.ToString(speedyShippingPrice)}";
+            }
+            else
+            {
+                listOfParcels = listOfParcels.Remove(listOfParcels.Length - 2);
+            }
+
             var finalReceipt = listOfParcels + " - Total Cost: $ " + Convert.ToString(total);
             return finalReceipt;
         }

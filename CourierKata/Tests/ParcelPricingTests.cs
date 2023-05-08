@@ -68,6 +68,27 @@ namespace CourierKata.Tests
 
             result.Should().Be("Small Parcel: $ 3, XL Parcel: $ 25 - Total Cost: $ 28");
         }
+        
+        
+        [Fact]
+        public void CalculateCostOfIncludingSpeedyShippingReturnsCorrectAmount()
+        {
+            var calc = new ParcelPriceCalculator();
+            var extraLargeParcel = new Parcel(120,120,120);
+            var smallParcel = new Parcel(3,3,4);
+
+            var parcels = new List<Parcel>
+            {
+                smallParcel,
+                extraLargeParcel
+            };
+
+            var result = calc.PriceParcel(parcels, true);
+
+            result.Should().Be("Small Parcel: $ 3, XL Parcel: $ 25, Speedy Shipping: $ 56 - Total Cost: $ 56");
+        }
+        
+        
 
     }
 }
