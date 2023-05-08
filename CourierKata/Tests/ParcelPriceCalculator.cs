@@ -1,32 +1,52 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace CourierKata.Tests
 {
     public class ParcelPriceCalculator
     {
-        public string PriceParcel(Parcel parcel)
+        public string PriceParcel(List<Parcel> parcels)
+        {
+            var listOfParcels = String.Empty;
+            var total = Decimal.Zero;
+            
+            for (int i = 0; i < parcels.Count; i++)
+            {
+                var parcelInformation = ParcelSize(parcels[i]);
+                listOfParcels += $"{parcelInformation.Item1} ";
+                total += parcelInformation.Item2;
+            }
+
+            listOfParcels = listOfParcels.Remove(listOfParcels.Length - 2);
+            var finalReceipt = listOfParcels + " - Total Cost: $ " + Convert.ToString(total);
+            return finalReceipt;
+        }
+
+        private Tuple<string, Decimal> ParcelSize(Parcel parcel)
         {
             if (parcel.Length < 10 && parcel.Height < 10 && parcel.Width < 10)
             {
-                return "Small Parcel: $3 - Total Cost: $3";
+                return new Tuple<string, decimal>("Small Parcel: $ 3,", 3);
             }
             
             if (parcel.Length < 50 && parcel.Height < 50 && parcel.Width < 50)
             {
-                return "Medium Parcel: $8 - Total Cost: $8";
+                return new Tuple<string, decimal>("Medium Parcel: $ 8,", 8);
             }
             
             if (parcel.Length < 100 && parcel.Height < 100 && parcel.Width < 100)
             {
-                return "Large Parcel: $15 - Total Cost: $15";
+                return new Tuple<string, decimal>("Large Parcel: $ 15,", 15);
             }
             
             if (parcel.Length > 100 && parcel.Height > 100 && parcel.Width > 100)
             {
-                return "XL Parcel: $25 - Total Cost: $25";
+                return new Tuple<string, decimal>("XL Parcel: $ 25,", 25);
             }
-
-            return "No parcels recorded - Total Cost: $0";
+            
+            return new Tuple<string, decimal>("No parcels recorded", 0);
         }
     }
 }
