@@ -11,7 +11,7 @@ namespace CourierKata.Tests
         public void CalculateCostOfSmallParcelReturnsCorrectAmount()
         {
             var calc = new ParcelPriceCalculator();
-            var parcel = new Parcel(1,1,1);
+            var parcel = new Parcel(1,1,1, 1);
 
             var result = calc.PriceParcel(new List<Parcel> {parcel});
 
@@ -22,7 +22,7 @@ namespace CourierKata.Tests
         public void CalculateCostOfMediumParcelReturnsCorrectAmount()
         {
             var calc = new ParcelPriceCalculator();
-            var parcel = new Parcel(20,20,20);
+            var parcel = new Parcel(20,20,20, 3);
 
             var result = calc.PriceParcel(new List<Parcel> {parcel});
 
@@ -33,7 +33,7 @@ namespace CourierKata.Tests
         public void CalculateCostOfLargeParcelReturnsCorrectAmount()
         {
             var calc = new ParcelPriceCalculator();
-            var parcel = new Parcel(60,70,80);
+            var parcel = new Parcel(60,70,80, 6);
 
             var result = calc.PriceParcel(new List<Parcel> {parcel});
 
@@ -44,7 +44,7 @@ namespace CourierKata.Tests
         public void CalculateCostOfXlParcelReturnsCorrectAmount()
         {
             var calc = new ParcelPriceCalculator();
-            var parcel = new Parcel(120,120,120);
+            var parcel = new Parcel(120,120,120, 10);
 
             var result = calc.PriceParcel(new List<Parcel> {parcel});
 
@@ -55,8 +55,8 @@ namespace CourierKata.Tests
         public void CalculateCostOfMultipleParcelReturnsCorrectAmountAndFormat()
         {
             var calc = new ParcelPriceCalculator();
-            var extraLargeParcel = new Parcel(120,120,120);
-            var smallParcel = new Parcel(3,3,4);
+            var extraLargeParcel = new Parcel(120,120,120, 10);
+            var smallParcel = new Parcel(3,3,4, 1);
 
             var parcels = new List<Parcel>
             {
@@ -74,8 +74,8 @@ namespace CourierKata.Tests
         public void CalculateCostOfIncludingSpeedyShippingReturnsCorrectAmount()
         {
             var calc = new ParcelPriceCalculator();
-            var extraLargeParcel = new Parcel(120,120,120);
-            var smallParcel = new Parcel(3,3,4);
+            var extraLargeParcel = new Parcel(120,120,120, 10);
+            var smallParcel = new Parcel(3,3,4, 1);
 
             var parcels = new List<Parcel>
             {
@@ -88,7 +88,23 @@ namespace CourierKata.Tests
             result.Should().Be("Small Parcel: $ 3, XL Parcel: $ 25, Speedy Shipping: $ 56 - Total Cost: $ 56");
         }
         
-        
+        [Fact]
+        public void CalculateCostOfOverweightParcelsReturnsCorrectAmount()
+        {
+            var calc = new ParcelPriceCalculator();
+            var extraLargeOverWeightParcel = new Parcel(120,120,120, 12);
+            var smallParcel = new Parcel(3,3,4, 1);
 
+            var parcels = new List<Parcel>
+            {
+                smallParcel,
+                extraLargeOverWeightParcel
+            };
+
+            var result = calc.PriceParcel(parcels, true);
+
+            result.Should().Be("Small Parcel: $ 3, XL Parcel: $ 25, Speedy Shipping: $ 64 - Total Cost: $ 64");
+        }
+    
     }
 }
